@@ -4,7 +4,7 @@ bool Downloader::download(const char* isoFilepath, const char* configFilepath, b
 {
     bool downloaded = true;
     bool copiedIso = false;
-    *hasConfig = false;
+    bool hasConfig = false;
 
     // Get a list of connected USBs
     List<Usb> usbs = Usb::list();
@@ -28,10 +28,10 @@ bool Downloader::download(const char* isoFilepath, const char* configFilepath, b
             }
 
             // Copy .conf
-            if (!(*hasConfig) && files[i].hasExtension("conf"))
+            if (!hasConfig && files[i].hasExtension("conf"))
             {
                 downloaded &= Downloader::copyUsbFileToDisk(&usb, configFilepath, files[i]);
-                *hasConfig = true;
+                bool hasConfig = true;
                 continue;
             }
         }
