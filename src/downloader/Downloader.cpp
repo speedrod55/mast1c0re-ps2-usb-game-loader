@@ -24,14 +24,13 @@ bool Downloader::download(const char* isoFilepath, const char* configFilepath, b
             {
                 downloaded &= Downloader::copyUsbFileToDisk(&usb, isoFilepath, files[i]);
                 copiedIso = true;
-                continue;
-            }
-
-            // Copy .conf
-            if (!hasConfig && files[i].hasExtension("conf"))
-            {
-                downloaded &= Downloader::copyUsbFileToDisk(&usb, configFilepath, files[i]);
-                bool hasConfig = true;
+                if (!hasConfig && files[i].hasExtension("conf"))
+                {
+                    downloaded &= Downloader::copyUsbFileToDisk(&usb, configFilepath, files[i]);
+                    bool hasConfig = true;
+                    continue;
+                }
+            else 
                 continue;
             }
         }
@@ -167,7 +166,7 @@ bool Downloader::getGameToLoad(List<Usb> usbs, Usb* usb, exFAT::Directory* direc
         for (uint32_t j = 0; j < directories.size(); j++)
         {
             // Ignore directories not containing an iso
-            if (!Downloader::directoryHasFileWithExtension(&(usbs[i]), &directories[j], "iso"))
+            if (!Downloader::directoryHasFileWithExtension(&(usbs[i]), &directories[j], "iso" || "conf"))
                 continue;
 
             gamesFound = true;
