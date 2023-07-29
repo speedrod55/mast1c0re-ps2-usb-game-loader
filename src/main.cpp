@@ -18,9 +18,9 @@ void main()
     // Filepaths
     const char* isoFilepath = "/av_contents/content_tmp/disc01.iso";
     const char* configFilepath = "/av_contents/content_tmp/SCUS-97129_cli.conf";
-
-    // Download ISO from USB
     bool hasConfig = false;
+    
+    // Download ISO from USB
     if (!Downloader::download(isoFilepath, configFilepath, &hasConfig))
     {
         // Disconnect from debug server
@@ -43,7 +43,7 @@ void main()
         char* ps2Path = PS2::gameCodeToPath(gameCode);
 
         // Load configuration file
-        if (hasConfig)
+        if (hasConfig == false)
         {
             PS::Debug.printf("Processing config %s\n", configFilepath);
             PS::ProcessConfigFile(getFilepathBypass(relativeConfigFilepath, configFilepath));
